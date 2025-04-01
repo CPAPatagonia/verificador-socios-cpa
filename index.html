@@ -144,7 +144,7 @@
 
     document.getElementById("result").innerHTML = '<div class="spinner"></div>';
 
-    fetch(`https://YOUR-WORKER-SUBDOMAIN.workers.dev/?rut=${encodeURIComponent(rut)}`)
+    fetch(`https://damp-wind-f452.cpa-patagoniapv.workers.dev/?rut=${encodeURIComponent(rut)}`)
       .then(response => response.text())
       .then(html => {
         document.getElementById("result").innerHTML = html;
