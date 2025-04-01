@@ -130,24 +130,30 @@
     <div id="result"></div>
 
     <script>
-      document.getElementById("rut-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        verificar();
-      });
+  document.getElementById("rut-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    verificar();
+  });
 
-      function verificar() {
-        const rut = document.getElementById("rut").value.trim();
-        if (!rut) {
-          document.getElementById("result").innerHTML = "⚠️ Ingresa un RUT.";
-          return;
-        }
-        // Show spinner
-        document.getElementById("result").innerHTML = '<div class="spinner"></div>';
-        // Call server
-        google.script.run.withSuccessHandler(function(response) {
-          document.getElementById("result").innerHTML = response;
-        }).checkRUT(rut);
-      }
-    </script>
+  function verificar() {
+    const rut = document.getElementById("rut").value.trim();
+    if (!rut) {
+      document.getElementById("result").innerHTML = "⚠️ Ingresa un RUT.";
+      return;
+    }
+
+    document.getElementById("result").innerHTML = '<div class="spinner"></div>';
+
+    fetch(`https://YOUR-WORKER-SUBDOMAIN.workers.dev/?rut=${encodeURIComponent(rut)}`)
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById("result").innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById("result").innerHTML = `<p class="not-found">❌ Error al contactar el servidor.</p>`;
+      });
+  }
+</script>
+
   </body>
 </html>
